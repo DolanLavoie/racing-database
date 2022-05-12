@@ -37,9 +37,20 @@ async function uploadRace(name, track, winner, season){
     }
 }
 
+async function getTable(table){
+    try{
+        await sql.connect(connection);
+        const result = await sql.query`SELECT * FROM ${table}`;
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     uploadCar,
     uploadTrack,
     uploadSeason,
-    uploadRace
+    uploadRace,
+    getTable
 };

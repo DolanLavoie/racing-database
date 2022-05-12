@@ -50,6 +50,10 @@ app.get('/uploadRace', async (req, res) => {
   var season = req.query.season;
   await dao.uploadRace(name, track, winner, season);
   res.sendStatus(200);
+});
+
+app.get('/getTable', async (req, res) => {
+  res.send(await dao.getTable(req.query.table));
 })
 
 app.listen(port, () => {
