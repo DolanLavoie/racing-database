@@ -1,0 +1,24 @@
+{
+  "name": "hello-node",
+  "version": "0.0.1",
+  "description": "Hello world server with Node.js",
+  "main": "app.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mssql": "^8.1.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timburr1/hello-node.git"
+  },
+  "author": "Tim Burr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timburr1/hello-node/issues"
+  },
+  "homepage": "https://github.com/timburr1/hello-node#readme"
+}
