@@ -2,3 +2,40 @@ body {
 	margin: 30px;
 	background-color: lightGrey;
 }
+table, th {
+	text-align: center;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: auto;
+	margin-right: auto;
+	height: 140px;
+	width: 340px;
+	font-size: 30px;
+}
+h1 {
+	text-align: center;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+	font-size: 50px;
+}
+
+nav {
+	text-align: center;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+.center {
+	left: 0; 
+	right: 0;
+	position: absolute;
+}
+
+a {
+	color: black;
+}
