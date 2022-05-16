@@ -6,6 +6,7 @@
         <script>
             window.onload = function(){
 				showCars();
+                showTracks();
 			};
             function submit(){
                 var xhr = new XMLHttpRequest();
@@ -49,8 +50,32 @@
                 }
                 xhr.send();
             }
-            function showCars(){
-                return;
+            function showTracks(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Tracks`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("track").innerHTML = table;
+                    }
+                }
+                xhr.send();
             }
         </script>
 	</head>
