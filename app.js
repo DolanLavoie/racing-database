@@ -54,7 +54,7 @@ app.get('/uploadRace', async (req, res) => {
 
 app.get('/getTable', async (req, res) => {
   res.send(await dao.getTable(req.query.table));
-})
+});
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)

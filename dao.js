@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const connection = 'Server=localhost,1433;Database=ArmyBuilder;User Id=test;Password=password;Encrypt=false';
+const connection = 'Server=localhost,1433;Database=Racing;User Id=test;Password=password;Encrypt=false';
 
 async function uploadCar(name, topSpeed, braking, turning){
     try{
@@ -40,7 +40,7 @@ async function uploadRace(name, track, winner, season){
 async function getTable(table){
     try{
         await sql.connect(connection);
-        const result = await sql.query`SELECT * FROM ${table}`;
+        const result = await sql.query("SELECT * FROM "+table);
         return result;
     } catch (err) {
         console.log(err);
