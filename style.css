@@ -2,7 +2,17 @@ body {
 	margin: 30px;
 	background-color: lightGrey;
 }
-table, th {
+
+table {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 140px;
+	width: 340px;
+	font-size: 30px;
+}
+
+th {
 	text-align: center;
 	border-width: 2px;
 	border-style: solid;
@@ -12,6 +22,7 @@ table, th {
 	width: 340px;
 	font-size: 30px;
 }
+
 h1 {
 	text-align: center;
 	border-width: 2px;
@@ -28,7 +39,7 @@ nav {
 	border-style: solid;
 	margin-left: auto;
 	margin-right: auto;
-	width: 500px;
+	width: 640px;
 }
 .center {
 	left: 0; 
@@ -36,6 +47,13 @@ nav {
 	position: absolute;
 }
 
+.border {
+	border-width: 2px;
+	border-style: solid;
+}
+
 a {
 	color: black;
+	font-size: 24px;
+	font-weight: bold;
 }
