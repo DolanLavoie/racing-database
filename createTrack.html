@@ -3,30 +3,106 @@
 	<head>
 		<title>Track Creator</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+            window.onload = function(){
+				showCars();
+                showTracks();
+			};
+            function submit(){
+                var xhr = new XMLHttpRequest();
+                var name = document.getElementById("name").value;
+                var topSpeed = document.getElementById("topSpeed").value;
+                var breaking = document.getElementById("braking").value;
+                var turning = document.getElementById("turning").value;
+                xhr.open("GET", `http://localhost:3000/uploadTrack?name=${name}&topSpeed=${topSpeed}&breaking=${breaking}&turning=${turning}`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showTracks();
+                    }
+                }
+                xhr.send();
+            }
+            function showCars(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Cars`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("car").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+            function showTracks(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Tracks`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("track").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+        </script>
 	</head>
 	<body>
         <nav>
             <a href="index.html">Homepage</a> |
             <a href="createCar.html">Make a Vehicle</a> |
             <a href="raceCar.html">Race your Vehicle</a> |
-			<a href="seasonRacer.html">Race a Season</a>
+			<a href="">Race a Season</a>
 		</nav>
 		<h1>Track Creator</h1>
 		<table>
 			<tr>
 				<th>
-                    <label for="vehicleName">Name of Track:</label>
+                    <label for="name">Name of Track:</label><br>
                     <input type="text" id="name">
                     </br>
                     <label for="topSpeed">Recommended Top Speed:</label>
-                    <input type="text" id="speed">
+                    <input type="number" id="topSpeed">
                     </br>
                     <label for="braking">Recommended Braking:</label>
-                    <input type="text" id="braking">
+                    <input type="number" id="braking">
                     </br>
                     <label for="turning">Recommended Turning:</label>
-                    <input type="text" id="turning">
+                    <input type="number" id="turning">
                     </br>
+                    <button type="button" onclick="submit()">Submit</button>
                 </th>
 				<th><label for="tracks">Tracks</label></br><div id="track"></div></th>
 			</tr>
