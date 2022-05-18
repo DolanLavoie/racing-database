@@ -5,8 +5,41 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
         <script>
             window.onload = function(){
-				return;
+				trackSelect();
+                seasonSelect();
 			};
+            function seasonSelect() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/getTable?table=Season", true)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        var options = "";
+                        for(i in data.recordset){
+                            options += "<option value='"+data.recordset[i].name+"'>"+data.recordset[i].name+"</option>"
+                        }
+                        document.getElementById('season').innerHTML = options;
+                    }
+                }
+                xhr.send()
+            }
+            function trackSelect() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/getTable?table=Tracks", true)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        var options = "";
+                        for(i in data.recordset){
+                            options += "<option value='"+data.recordset[i].name+"'>"+data.recordset[i].name+"</option>"
+                        }
+                        document.getElementById('track').innerHTML = options;
+                    }
+                }
+                xhr.send()
+            }
             function racersAmount() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "http://localhost:3000/getTable?table=Cars", true)
@@ -59,24 +92,30 @@
 		<h1>Vehicle Racer</h1>
 		<table>
 			<tr>
-				<th>
-                    <label for="racersAmount">Amount of Racers:</label>
-                    <input type="number" id="racersAmount">
-                    <button type = "button" onclick = "racersAmount()">Select Racers Amount</button>
-                    </br>
-                    <div class="border" id="racers"></div>
-                    <label for="raceName">Name of Race:</label>
-                    <input type="text" id="raceName">
-                    </br>
-                    <!-- <label for="racer">Racer:</label>
-                    <select name="racer" id="racer"></select>
-                    </br> -->
-                    <label for="track">Track:</label>
-                    <select name="select" id="track"></select>
-                    </br>
-                    <label for="season">Season:</label>
-                    <select name="select" id="season"></select>
-                    
+                <th>
+                    <table>
+                        <td class="noBorder">
+                            <label for="raceName">Name of Race:</label>
+                            <input type="text" id="raceName">
+                            </br>
+                            <!-- <label for="racer">Racer:</label>
+                            <select name="racer" id="racer"></select>
+                            </br> -->
+                            <label for="track">Track:</label>
+                            <select name="select" id="track"></select>
+                            </br>
+                            <label for="season">Season:</label>
+                            <select name="select" id="season"></select>
+                            <button type="button" onclick="submit()">Submit</button>
+                        </td>
+                        <td class="noBorder">
+                            <label for="racersAmount">Amount of Racers:</label>
+                            <input type="number" id="racersAmount">
+                            <button type = "button" onclick = "racersAmount()">Select Racers Amount</button>
+                            </br>
+                            <div class="border" id="racers"></div>
+                        </td>
+                    </table>
                 </th>
 				<th><label for="tracks">Tracks</label></br><div id="track"></div></th>
 			</tr>
