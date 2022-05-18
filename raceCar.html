@@ -3,6 +3,50 @@
 	<head>
 		<title>Vehicle Racer</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+            window.onload = function(){
+				return;
+			};
+            function racersAmount() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/getTable?table=Cars", true)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        var racers = "";
+                        for(let i = 0; i < document.getElementById("racersAmount").value; i++){
+                            racers += '<label for="racer">Racer:</label>'
+                            racers += `<select name="racer" id="racer${i}"></select>`
+                            racers += '</br>'
+                        }
+                        document.getElementById("racers").innerHTML = racers;
+                        racerChoice();
+                        console.log(racers);
+                    }
+                }
+                xhr.send()
+            }
+
+            function racerChoice() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/getTable?table=Cars", true)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        var options = "";
+                        for(i in data.recordset){
+                            options += "<option value='"+data.recordset[i].name+"'>"+data.recordset[i].name+"</option>"
+                        }
+                        for(let i = 0; i < document.getElementById("racersAmount").value; i++){
+                            document.getElementById(`racer${i}`).innerHTML = options;
+                        }
+                    }
+                }
+                xhr.send()
+            }
+        </script>
 	</head>
 	<body>
         <nav>
@@ -16,21 +60,28 @@
 			<tr>
 				<th>
                     <label for="racersAmount">Amount of Racers:</label>
-                    <input type="text" id="racersAmount">
+                    <input type="number" id="racersAmount">
+                    <button type = "button" onclick = "racersAmount()">Select Racers Amount</button>
                     </br>
-                    <label for="racer">Racer:</label>
+                    <div class="border" id="racers"></div>
+                    <label for="raceName">Name of Race:</label>
+                    <input type="text" id="raceName">
+                    </br>
+                    <!-- <label for="racer">Racer:</label>
                     <select name="racer" id="racer"></select>
-                    </br>
+                    </br> -->
                     <label for="track">Track:</label>
                     <select name="select" id="track"></select>
                     </br>
                     <label for="season">Season:</label>
                     <select name="select" id="season"></select>
+                    
                 </th>
 				<th><label for="tracks">Tracks</label></br><div id="track"></div></th>
 			</tr>
 			<tr>
                 <th><label for="vehicles">Vehicles</label></br><div id="car"></div></th>
+            </tr>
 		</table>
 	</body>
 </html>
