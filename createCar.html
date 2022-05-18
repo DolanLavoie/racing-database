@@ -6,6 +6,7 @@
         <script>
             window.onload = function(){
 				showCars();
+                showTracks();
 			};
             function submit(){
                 var xhr = new XMLHttpRequest();
@@ -49,6 +50,33 @@
                 }
                 xhr.send();
             }
+            function showTracks(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Tracks`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("track").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
         </script>
 	</head>
 	<body>
@@ -63,16 +91,16 @@
 		<table>
 			<tr>
 				<th>
-                    <label for="name">Vehicle Type:</label>
+                    <label for="name">Vehicle Type:</label><br>
                     <input type="text" id="name">
                     </br>
-                    <label for="topSpeed">Top Speed:</label>
+                    <label for="topSpeed">Top Speed:</label><br>
                     <input type="number" id="topSpeed">
                     </br>
-                    <label for="braking">Braking:</label>
+                    <label for="braking">Braking:</label><br>
                     <input type="number" id="braking">
                     </br>
-                    <label for="turning">Turning:</label>
+                    <label for="turning">Turning:</label><br>
                     <input type="number" id="turning">
                     </br>
                     <button type="button" onclick="submit()">Submit</button>
