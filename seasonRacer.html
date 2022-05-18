@@ -3,6 +3,47 @@
 	<head>
 		<title>Season Racer</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<script>
+			window.onload = function(){
+				// showRaces();
+                showSeasons();
+			};
+			function submit(){
+                var xhr = new XMLHttpRequest();
+                var name = document.getElementById("name").value;
+                var winner = document.getElementById("winner").value;
+                xhr.open("GET", `http://localhost:3000/uploadSeason?name=${name}&winner=${winner}`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showSeasons();
+                    }
+                }
+				xhr.send();
+            }
+			function showSeasons(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Season`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Winner</th>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].winner}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("season").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+		</script>
 	</head>
 	<body>
         <nav>
@@ -16,14 +57,21 @@
 		<table>
 			<tr>
 				<th>
-                    <label for="name">Season Name:</label><div id="season"></div>
+                    <label for="name">Season Name:</label>
+					<input type="text" id="name">
                     </br>
-                    <label for="winner">Season Winner:</label><div id="won"></div>
+					<!-- <button type="button" onclick="submit()">Submit</button>
+					</br> -->
+					<label for="winner">Season Winner:</label>
+					<input type="number" id="winner">
+                    </br>
+					<button type="button" onclick="submit()">Submit</button>
+                    <!-- <label for="winner">Season Winner:</label><div id="winner"></div> -->
                 </th>
-				<th><label for="tracks">Tracks</label></br><div id="track"></div></th>
+				<th><label for="race">Races</label></br><div id="race"></div></th>
 			</tr>
 			<tr>
-                <th><label for="vehicles">Vehicles</label></br><div id="car"></div></th>
+                <th><label for="season">Seasons</label></br><div id="season"></div></th>
             </tr>
 		</table>
 	</body>
