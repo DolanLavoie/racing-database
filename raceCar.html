@@ -7,6 +7,7 @@
             window.onload = function(){
 				trackSelect();
                 seasonSelect();
+                showSeasons();
 			};
             function seasonSelect() {
                 var xhr = new XMLHttpRequest();
@@ -97,6 +98,30 @@
                 }
                 xhr.send();
             }
+
+            function showSeasons(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Season`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Winner</th>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].winner}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("seasonHistory").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+
         </script>
 	</head>
 	<body>
@@ -135,10 +160,10 @@
                         </td>
                     </table>
                 </th>
-				<th><label for="tracks">Tracks</label></br><div id="track"></div></th>
+				<th><label for="race">Races</label></br><div id="race"></div></th>
 			</tr>
 			<tr>
-                <th><label for="vehicles">Vehicles</label></br><div id="car"></div></th>
+                <th><label for="seasonHistory">Seasons</label></br><div id="seasonHistory"></div></th>
             </tr>
 		</table>
 	</body>
