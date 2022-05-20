@@ -47,9 +47,8 @@
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                         var data = JSON.parse(xhr.responseText)
-                        var racers = "";
+                        var racers = '<label>Racers:</label>';
                         for(let i = 0; i < document.getElementById("racersAmount").value; i++){
-                            racers += '<label for="racer">Racer:</label>'
                             racers += `<select name="racer" id="racer${i}"></select>`
                             racers += '</br>'
                         }
@@ -77,6 +76,26 @@
                     }
                 }
                 xhr.send()
+            }
+
+            function submit(){
+                var xhr = new XMLHttpRequest();
+                var name = document.getElementById("raceName").value;
+                var track = document.getElementById("track").value;
+                var season = document.getElementById("season").value;
+                var racerArray = [];
+                for(let i = 0; i < document.getElementById("racersAmount").value; i++){
+                    racerArray.push(document.getElementById(`racer${i}`).value);
+                }
+                racerArray = JSON.stringify(racerArray);
+                xhr.open("GET", `http://localhost:3000/uploadRace?name=${name}&track=${track}&season=${season}&racers=${racerArray}`);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        return;
+                    }
+                }
+                xhr.send();
             }
         </script>
 	</head>
