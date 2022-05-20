@@ -44,10 +44,32 @@ app.get('/uploadSeason', async (req, res) => {
 });
 
 app.get('/uploadRace', async (req, res) => {
+  //Inputs
   var name = req.query.name;
-  var track = req.query.racedAt;
-  var winner = req.query.winner;
+  var track = req.query.track;
+  var racers = JSON.parse(req.query.racers);
   var season = req.query.season;
+  //Track Stats
+  var trackStats = await dao.advancedGetTable("Tracks", "name = '"+track+"'");
+  var trackSpeed = trackStats.recordset[0].topSpeed;
+  var trackBraking = trackStats.recordset[0].breaking;
+  var trackTurning = trackStats.recordset[0].turning;
+  //Calculate winner
+  var highestPower = 0;
+  var winner;
+  //console.log(racers);
+  for(let i = 0; i < racers.length; i++){
+    var racerStats = await dao.advancedGetTable("Cars", "name = '"+racers[i]+"'");
+    var racerSpeed = racerStats.recordset[0].topSpeed;
+    var racerBraking = racerStats.recordset[0].breaking;
+    var racerTurning = racerStats.recordset[0].turning;
+    var racingPower = (racerSpeed*trackSpeed)+(racerBraking*trackBraking)+(racerTurning*trackTurning);
+    if(racingPower > highestPower){
+      highestPower = racingPower;
+      winner = racerStats.recordset[0].name;
+    }
+  }
+  console.log(winner);
   await dao.uploadRace(name, track, winner, season);
   res.sendStatus(200);
 });

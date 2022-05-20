@@ -18,18 +18,14 @@ CREATE TABLE Tracks(id INT PRIMARY KEY IDENTITY(1, 1),
 
 CREATE TABLE Season(id INT PRIMARY KEY IDENTITY(1, 1),
 	name VARCHAR(56),
-	winner INT,
-	FOREIGN KEY(winner) REFERENCES Cars(id)
+	winner VARCHAR(56),
 );
 
 CREATE TABLE Race(id INT PRIMARY KEY IDENTITY(1, 1),
 	name VARCHAR(56),
-	racedAt INT,
-	winner INT,
-	season INT,
-	FOREIGN KEY(racedAt) REFERENCES Tracks(id),
-	FOREIGN KEY(winner) REFERENCES Cars(id),
-	FOREIGN KEY(season) REFERENCES Season(id)
+	racedAt VARCHAR(56),
+	winner VARCHAR(56),
+	season VARCHAR(56),
 );
 
 SELECT * FROM Cars;

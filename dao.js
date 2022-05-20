@@ -47,10 +47,21 @@ async function getTable(table){
     }
 }
 
+async function advancedGetTable(table, requirement){
+    try{
+        await sql.connect(connection);
+        const result = await sql.query("SELECT * FROM "+table+" WHERE "+requirement);
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     uploadCar,
     uploadTrack,
     uploadSeason,
     uploadRace,
-    getTable
+    getTable,
+    advancedGetTable
 };
