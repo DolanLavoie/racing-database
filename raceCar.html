@@ -8,6 +8,7 @@
 				trackSelect();
                 seasonSelect();
                 showSeasons();
+                showRaces();
 			};
             function seasonSelect() {
                 var xhr = new XMLHttpRequest();
@@ -93,7 +94,7 @@
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                        return;
+                        showRaces();
                     }
                 }
                 xhr.send();
@@ -121,7 +122,32 @@
                 }
                 xhr.send();
             }
-
+            function showRaces(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Race`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Track</th>";
+                        table += "<th>Season</th>";
+                        table += "<th>Winner</th>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].racedAt}</td>`;
+                            table += `<td>${data.recordset[r].season}</td>`;
+                            table += `<td>${data.recordset[r].winner}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("race").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
         </script>
 	</head>
 	<body>
