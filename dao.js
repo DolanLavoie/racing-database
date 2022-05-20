@@ -57,11 +57,21 @@ async function advancedGetTable(table, requirement){
     }
 }
 
+async function dropTable(table){
+    try{
+        await sql.connect(connection);
+        await sql.query("TRUNCATE TABLE " + table);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     uploadCar,
     uploadTrack,
     uploadSeason,
     uploadRace,
     getTable,
-    advancedGetTable
+    advancedGetTable,
+    dropTable
 };

@@ -78,6 +78,10 @@ app.get('/getTable', async (req, res) => {
   res.send(await dao.getTable(req.query.table));
 });
 
+app.get('/dropTable', async (req, res) => {
+  res.send(await dao.dropTable(req.query.table));
+});
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
 })
