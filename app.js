@@ -62,7 +62,7 @@ app.get('/uploadRace', async (req, res) => {
     var racerSpeed = racerStats.recordset[0].topSpeed;
     var racerBraking = racerStats.recordset[0].breaking;
     var racerTurning = racerStats.recordset[0].turning;
-    var racingPower = (racerSpeed*trackSpeed)+(racerBraking*trackBraking)+(racerTurning*trackTurning);
+    var racingPower = (racerSpeed*trackSpeed)*(racerBraking*trackBraking)*(racerTurning*trackTurning);
     if(racingPower > highestPower){
       highestPower = racingPower;
       winner = racerStats.recordset[0].name;
