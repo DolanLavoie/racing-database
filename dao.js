@@ -66,6 +66,16 @@ async function dropTable(table){
     }
 }
 
+async function findSeasonWinner(season){
+    try{
+        await sql.connect(connection);
+        const result = await sql.query("SELECT winner AS driver, COUNT(name) AS wins FROM Race WHERE season = '"+season+"' GROUP BY winner ORDER BY wins DESC");
+        return result.recordset[0].driver;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     uploadCar,
     uploadTrack,
@@ -73,5 +83,6 @@ module.exports = {
     uploadRace,
     getTable,
     advancedGetTable,
-    dropTable
+    dropTable,
+    findSeasonWinner
 };

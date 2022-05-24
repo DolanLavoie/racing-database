@@ -81,6 +81,13 @@ app.get('/dropTable', async (req, res) => {
   res.send(await dao.dropTable(req.query.table));
 });
 
+app.get('/findSeasonWinner', async (req, res) => {
+  var season = req.query.season;
+  var winner = await dao.findSeasonWinner(season);
+  console.log(winner);
+  res.send(winner);
+})
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
 })
