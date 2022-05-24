@@ -84,7 +84,6 @@ app.get('/dropTable', async (req, res) => {
 app.get('/findSeasonWinner', async (req, res) => {
   var season = req.query.season;
   var winner = await dao.findSeasonWinner(season);
-  console.log(winner);
   res.send(winner);
 })
 
