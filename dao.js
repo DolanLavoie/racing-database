@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const connection = 'Server=localhost,1433;Database=Racing;User Id=test;Password=1234;Encrypt=false';
+const connection = 'Server=localhost,1433;Database=Racing;User Id=test;Password=password;Encrypt=false';
 
 async function uploadCar(name, topSpeed, braking, turning){
     try{
