@@ -7,7 +7,25 @@
 			window.onload = function(){
 				showRaces();
                 showSeasons();
+                seasonChoice();
 			};
+
+            function seasonChoice() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/getTable?table=Season", true)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        var options = "";
+                        for(i in data.recordset){
+                            options += "<option value='"+data.recordset[i].name+"'>"+data.recordset[i].name+"</option>"
+                        }
+                        document.getElementById("pick").innerHTML = options;
+                    }
+                }
+                xhr.send()
+            }
 			function submit(){
                 var xhr = new XMLHttpRequest();
                 var name = document.getElementById("name").value;
@@ -16,9 +34,23 @@
 				xhr.onreadystatechange = () => {
                     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
                         showSeasons();
+                        seasonChoice();
                     }
                 }
 				xhr.send();
+            }
+            function winner(){
+                var xhr = new XMLHttpRequest();
+                var name = document.getElementById("pick").value;
+                xhr.open("GET", `http://localhost:3000/findSeasonWinner?season=${name}`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = xhr.responseText;
+                        document.getElementById("won").innerHTML = data;
+                    }
+                }
+                xhr.send();
             }
 			function showSeasons(){
                 var xhr = new XMLHttpRequest();
@@ -80,10 +112,27 @@
 		<table>
 			<tr>
 				<th>
-                    <label for="name">Season Name:</label>
-					<input type="text" id="name">
-                    </br>
-					<button type="button" onclick="submit()">Submit</button>
+                    <table>
+                        <th class="noBorder">Insert Season</th>
+                        <th class="noBorder">Get Winner</th>
+                        <tr>
+                            <td class="noBorder">
+                                
+                                <label for="name">Season Name:</label>
+                                <input type="text" id="name">
+                                </br>
+                                <button type="button" onclick="submit()">Submit</button>
+                            </td>
+                            <td class="noBorder">
+                                <label for="pick">Season</label>
+                                <select name="pick" id="pick"></select>
+                                </br>
+                                <button type="button" onclick="winner()">Get Winner</button>
+                                </br>
+                                <div id="won"></div>
+                            </td>
+                        </tr>
+                    </table>
                 </th>
 				<th><label for="race">Races</label></br><div id="race"></div></th>
 			</tr>
