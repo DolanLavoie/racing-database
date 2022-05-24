@@ -116,28 +116,44 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "http://localhost:3000/dropTable?table=Cars");
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                showCars();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showCars();
+                    }
+                }
                 xhr.send();
             }
             function deleteTracks() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "http://localhost:3000/dropTable?table=Tracks");
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                showTracks();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showTracks();
+                    }
+                }
                 xhr.send();
             }
             function deleteRaces() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "http://localhost:3000/dropTable?table=Race");
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                showRaces();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showRaces();
+                    }
+                }
                 xhr.send();
             }
             function deleteSeasons() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "http://localhost:3000/dropTable?table=Season");
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                showSeasons();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        showSeasons();
+                    }
+                }
                 xhr.send();
             }
         </script>
