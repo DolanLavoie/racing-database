@@ -38,8 +38,7 @@ app.get('/uploadTrack', async (req, res) => {
 
 app.get('/uploadSeason', async (req, res) => {
   var name = req.query.name;
-  var winner = req.query.winner;
-  await dao.uploadSeason(name, winner);
+  await dao.uploadSeason(name);
   res.sendStatus(200);
 });
 

@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const connection = 'Server=localhost,1433;Database=Racing;User Id=test;Password=password;Encrypt=false';
+const connection = 'Server=localhost,1433;Database=Racing;User Id=test;Password=1234;Encrypt=false';
 
 async function uploadCar(name, topSpeed, braking, turning){
     try{
@@ -19,10 +19,10 @@ async function uploadTrack(name, topSpeed, breaking, turning){
     }
 }
 
-async function uploadSeason(name, winner){
+async function uploadSeason(name){
     try{
         await sql.connect(connection);
-        await sql.query`INSERT INTO Season VALUES(${name}, ${winner})`;
+        await sql.query`INSERT INTO Season VALUES(${name})`;
     } catch (err) {
         console.log(err);
     }

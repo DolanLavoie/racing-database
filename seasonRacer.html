@@ -11,8 +11,7 @@
 			function submit(){
                 var xhr = new XMLHttpRequest();
                 var name = document.getElementById("name").value;
-                var winner = document.getElementById("winner").value;
-                xhr.open("GET", `http://localhost:3000/uploadSeason?name=${name}&winner=${winner}`, true);
+                xhr.open("GET", `http://localhost:3000/uploadSeason?name=${name}`, true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.onreadystatechange = () => {
                     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
@@ -30,11 +29,9 @@
                         var data = JSON.parse(xhr.responseText);
                         var table = "<table><tr>";
                         table += "<th>Name</th>";
-                        table += "<th>Winner</th>";
                         for(r in data.recordset){
                             table += "<tr>";
                             table += `<td>${data.recordset[r].name}</td>`;
-                            table += `<td>${data.recordset[r].winner}</td>`;
                             table += "</tr>";
                         }
                         table += "</table>";
@@ -86,13 +83,7 @@
                     <label for="name">Season Name:</label>
 					<input type="text" id="name">
                     </br>
-					<!-- <button type="button" onclick="submit()">Submit</button>
-					</br> -->
-					<label for="winner">Season Winner:</label>
-					<input type="text" id="winner">
-                    </br>
 					<button type="button" onclick="submit()">Submit</button>
-                    <!-- <label for="winner">Season Winner:</label><div id="winner"></div> -->
                 </th>
 				<th><label for="race">Races</label></br><div id="race"></div></th>
 			</tr>

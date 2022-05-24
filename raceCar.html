@@ -109,11 +109,9 @@
                         var data = JSON.parse(xhr.responseText);
                         var table = "<table><tr>";
                         table += "<th>Name</th>";
-                        table += "<th>Winner</th>";
                         for(r in data.recordset){
                             table += "<tr>";
                             table += `<td>${data.recordset[r].name}</td>`;
-                            table += `<td>${data.recordset[r].winner}</td>`;
                             table += "</tr>";
                         }
                         table += "</table>";
