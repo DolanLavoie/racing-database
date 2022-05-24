@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Admin Page</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+            window.onload = function(){
+				showCars();
+                showTracks();
+				showRaces();
+                showSeasons();
+			};
+            function showCars(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Cars`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("car").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+            function showTracks(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Tracks`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Top Speed</th>";
+                        table += "<th>Braking</th>";
+                        table += "<th>Turning</th>";
+                        table += "</tr>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].topSpeed}</td>`;
+                            table += `<td>${data.recordset[r].breaking}</td>`;
+                            table += `<td>${data.recordset[r].turning}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("track").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+            function showSeasons(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Season`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Winner</th>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].winner}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("seasonHistory").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+            function showRaces(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3000/getTable?table=Race`, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+                        var data = JSON.parse(xhr.responseText);
+                        var table = "<table><tr>";
+                        table += "<th>Name</th>";
+                        table += "<th>Track</th>";
+                        table += "<th>Season</th>";
+                        table += "<th>Winner</th>";
+                        for(r in data.recordset){
+                            table += "<tr>";
+                            table += `<td>${data.recordset[r].name}</td>`;
+                            table += `<td>${data.recordset[r].racedAt}</td>`;
+                            table += `<td>${data.recordset[r].season}</td>`;
+                            table += `<td>${data.recordset[r].winner}</td>`;
+                            table += "</tr>";
+                        }
+                        table += "</table>";
+                        document.getElementById("race").innerHTML = table;
+                    }
+                }
+                xhr.send();
+            }
+            function deleteCars() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/dropTable?table=Cars");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                showCars();
+                xhr.send();
+            }
+            function deleteTracks() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/dropTable?table=Tracks");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                showTracks();
+                xhr.send();
+            }
+            function deleteRaces() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/dropTable?table=Race");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                showRaces();
+                xhr.send();
+            }
+            function deleteSeasons() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/dropTable?table=Season");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                showSeasons();
+                xhr.send();
+            }
+        </script>
+	</head>
+	<body class="admin">
+        <nav>
+            <a class="adminNav" href="index.html">Homepage</a> |
+            <a class="adminNav" href="createCar.html">Make a Vehicle</a> |
+            <a class="adminNav" href="createTrack.html">Make a Track</a> |
+            <a class="adminNav" href="raceCar.html">Race your Vehicle</a> |
+			<a class="adminNav" href="seasonRacer.html">Race a Season</a>
+		</nav>
+		<h1>Admin Page</h1>
+        <div>
+            <table class="center border">
+                <tr>
+                    <th><button type="button" onclick="deleteCars()">Clear Vehicles</button></th>
+                    <th><label for="vehicles">Vehicles</label></br><div id="car"></div></th>
+                    <th><label for="tracks">Tracks</label></br><div id="track"></div></th>
+                    <th><button type="button" onclick="deleteTracks()">Clear Tracks</button></th>
+                </tr>
+                <tr>
+                    <th><button type="button" onclick="deleteRaces()">Clear Races</button></th>
+                    <th><label for="race">Races</label></br><div id="race"></div></th>
+                    <th><label for="seasonHistory">Seasons</label></br><div id="seasonHistory"></div></th>
+                    <th><button type="button" onclick="deleteSeasons()">Clear Seasons</button></th>
+                </tr>
+            </table>
+        </div>
+	</body>
+</html>
